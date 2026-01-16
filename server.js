@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import chokidar from 'chokidar';
@@ -73,7 +74,7 @@ fs.ensureDirSync(PROMPTS_DIR);
 fs.ensureDirSync(DEFAULTS_DIR);
 
 const DEFAULT_SETTINGS = {
-    apiKey: "",
+    apiKey: process.env.API_KEY || "",
     outputFolder: "./output_pdfs", 
     watchedFolders: ["./input_pdfs"],   
     rpm: 10,
@@ -1250,9 +1251,38 @@ app.get('/api/config/defaults', (req, res) => {
     try { Object.keys(PROMPT_FILES).forEach(key => { const p = path.join(DEFAULTS_DIR, PROMPT_FILES[key]); defaults[key] = fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : ""; }); res.json(defaults); } 
     catch (e) { res.status(500).json({ error: "Defaults error" }); }
 });
+
+const updateEnvApiKey = (newKey) => {
+    const envPath = path.join(process.cwd(), '.env');
+    let envContent = '';
+    if (fs.existsSync(envPath)) {
+        envContent = fs.readFileSync(envPath, 'utf8');
+    }
+    
+    const keyLine = `API_KEY=${newKey}`;
+    const regex = /^API_KEY=.*$/m;
+    
+    if (regex.test(envContent)) {
+        envContent = envContent.replace(regex, keyLine);
+    } else {
+        envContent += (envContent.endsWith('\n') ? '' : '\n') + keyLine + '\n';
+    }
+    
+    fs.writeFileSync(envPath, envContent, 'utf8');
+};
+
 app.post('/api/config/settings', (req, res) => {
+    // Check if apiKey is being updated
+    if (req.body.apiKey !== undefined && req.body.apiKey !== settings.apiKey) {
+        updateEnvApiKey(req.body.apiKey);
+        // Also update the current process env so it works immediately without restart
+        process.env.API_KEY = req.body.apiKey;
+    }
+
     settings = { ...settings, ...req.body };
-    fs.writeJsonSync(CONFIG_FILE, settings, { spaces: 2 });
+    // Don't save apiKey to config file, it should come from .env
+    const { apiKey, ...settingsToSave } = settings;
+    fs.writeJsonSync(CONFIG_FILE, settingsToSave, { spaces: 2 });
     updateWatcher();
     if (settings.autoProcess && settings.apiKey && !isProcessing) startProcessingBatch();
     res.sendStatus(200);

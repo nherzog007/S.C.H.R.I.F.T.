@@ -1,5 +1,4 @@
 {
-  "apiKey": "AIzaSyBigevCrHEmHQ4EpC2h0GNmhmPa-j3ljdY",
   "outputFolder": "./output_pdfs",
   "watchedFolders": [
     "./input_pdfs"
