@@ -144,8 +144,17 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({
                 </div>
             )}
             
+            {/* Active Queue Header */}
+            {activeFiles.length > 0 && (
+                <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-3 flex items-center">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Pending / Processing Queue ({activeFiles.length})
+                </h3>
+            )}
+
             {/* Active Queue */}
-            {activeFiles.map(file => (
+            <div className="space-y-3">
+                {activeFiles.map(file => (
                 <div 
                     key={file.id} 
                     draggable={file.status !== 'processing'}
@@ -196,39 +205,49 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({
                     )}
                 </div>
             ))}
+            </div>
+
+            {/* Separator */}
+            {activeFiles.length > 0 && status.completed.length > 0 && (
+                <div className="my-8 border-t border-slate-800"></div>
+            )}
 
             {/* Completed List (Limited history) */}
             {status.completed.length > 0 && (
-                <div className="mt-8 border-t border-slate-800 pt-4">
+                <div className="mt-4">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-sm font-bold text-slate-500 uppercase">Recently Completed</h3>
+                        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center">
+                            <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                            Completed Files
+                        </h3>
                         <button onClick={clearCompleted} className="text-xs text-slate-600 hover:text-red-400 flex items-center">
                             <Trash className="w-3 h-3 mr-1" /> Clear History
                         </button>
                     </div>
-                    <div className="space-y-2 opacity-60 hover:opacity-100 transition">
+                    <div className="space-y-2">
                         {status.completed.map(file => (
-                            <div key={file.id} className="bg-slate-950 border border-slate-800 p-3 rounded flex items-center justify-between group">
+                            <div key={file.id} className="bg-slate-950 border border-slate-800 p-3 rounded flex items-center justify-between group hover:border-slate-700 transition">
                                 <div className="flex items-center space-x-3">
                                     {file.status === 'error' ? (
                                         <AlertTriangle className="w-4 h-4 text-red-500" />
                                     ) : (
                                         <CheckCircle className="w-4 h-4 text-green-500" />
                                     )}
-                                    <span className="text-sm text-slate-400 truncate w-64">{file.originalName}</span>
+                                    <span className="text-sm text-slate-300 truncate w-64">{file.originalName}</span>
                                 </div>
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center space-x-4">
                                     {file.status === 'error' ? (
                                         <span className="text-xs text-red-500 truncate max-w-[150px]">{file.errorMsg}</span>
                                     ) : (
-                                        <span className="text-xs text-green-500">Saved to Output</span>
+                                        <span className="text-xs text-green-600 bg-green-500/10 px-2 py-0.5 rounded">Saved</span>
                                     )}
                                     <button
                                         onClick={() => handleRedo(file.id)}
-                                        title="Re-process this file"
-                                        className="p-1.5 rounded bg-slate-800 text-slate-500 hover:text-indigo-400 hover:bg-slate-700 opacity-0 group-hover:opacity-100 transition"
+                                        title="Re-run conversion"
+                                        className="flex items-center px-2 py-1 space-x-1 rounded bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition"
                                     >
                                         <RotateCcw className="w-3.5 h-3.5" />
+                                        <span className="text-[10px] font-medium">Rerun</span>
                                     </button>
                                 </div>
                             </div>
