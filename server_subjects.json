@@ -1,0 +1,12 @@
+[
+  {
+    "id": "GLOBAL_DEFAULTS",
+    "subjectName": "Global Defaults"
+  },
+  {
+    "id": "LEN",
+    "subjectName": "LEN",
+    "generateExcalidraw": true,
+    "excalidrawThreshold": 1
+  }
+]

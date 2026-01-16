@@ -1,0 +1,24 @@
+{
+  "apiKey": "AIzaSyBigevCrHEmHQ4EpC2h0GNmhmPa-j3ljdY",
+  "outputFolder": "./output_pdfs",
+  "watchedFolders": [
+    "./input_pdfs"
+  ],
+  "rpm": 150,
+  "maxWorkers": 100,
+  "modelName": "gemini-2.5-pro",
+  "maxRequestsPerDay": 100000,
+  "renderDpi": 300,
+  "exportFormat": "image/png",
+  "exportQuality": 0.9,
+  "autoProcess": false,
+  "generateExcalidraw": true,
+  "excalidrawThreshold": 0.95,
+  "useSameFolderForOutput": false,
+  "refineMarkdown": true,
+  "models": {
+    "transcription": "gemini-2.5-pro",
+    "excalidraw": null,
+    "refinement": "gemini-3-pro-preview"
+  }
+}

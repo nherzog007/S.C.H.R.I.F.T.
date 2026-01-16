@@ -1,0 +1,60 @@
+{
+	"formatVersion": 2,
+	"appVersion": "0.100.0",
+	"files": [
+		{
+			"isClone": false,
+			"noteId": "BiqCe3YiK9r4",
+			"notePath": [
+				"BiqCe3YiK9r4"
+			],
+			"title": "Example Note",
+			"notePosition": 240,
+			"prefix": null,
+			"isExpanded": true,
+			"type": "text",
+			"mime": "text/html",
+			"attributes": [
+				{
+					"type": "relation",
+					"name": "imageLink",
+					"value": "eFP8u870GGXn",
+					"isInheritable": false,
+					"position": 10
+				}
+			],
+			"format": "markdown",
+			"dataFileName": "Example Note.md",
+			"attachments": [],
+			"dirFileName": "Example Note",
+			"children": [
+				{
+					"isClone": false,
+					"noteId": "eFP8u870GGXn",
+					"notePath": [
+						"BiqCe3YiK9r4",
+						"eFP8u870GGXn"
+					],
+					"title": "Example excalidraw",
+					"notePosition": 10,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "canvas",
+					"mime": "application/json",
+					"attributes": [],
+					"dataFileName": "Example excalidraw.json",
+					"attachments": [
+						{
+							"attachmentId": "U5lAqR4gxgOA",
+							"title": "canvas-export.svg",
+							"role": "image",
+							"mime": "image/svg+xml",
+							"position": 0,
+							"dataFileName": "Example excalidraw_canvas-.svg"
+						}
+					]
+				}
+			]
+		}
+	]
+}

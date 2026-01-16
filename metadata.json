@@ -1,0 +1,5 @@
+{
+  "name": "NoteForge AI",
+  "description": "A powerful GUI for batch processing handwritten PDF notes into Trilium-compatible Markdown using Gemini 1.5/2.5 Pro. Features diagram extraction, custom per-subject prompting, and local processing.",
+  "requestFramePermissions": []
+}
